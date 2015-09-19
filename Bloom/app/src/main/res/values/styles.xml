@@ -7,4 +7,10 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
+    <style name="interestRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/interest_bar</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:maxHeight">48dp</item>
+    </style>
+
 </resources>

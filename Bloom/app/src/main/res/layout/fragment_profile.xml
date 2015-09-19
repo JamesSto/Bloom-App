@@ -1,6 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="cornell.hacks.bloom.ProfileFragment"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="cornell.hacks.bloom.ProfileFragment"
     android:id="@+id/a"
     android:screenOrientation="portrait">
 
@@ -40,19 +43,30 @@
     </LinearLayout>
 
     <RatingBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="500dp"
         android:id="@+id/ratingBar"
         android:layout_below="@id/topBar"
-        android:layout_centerHorizontal="true"
-        android:numStars="5"
+        style="@style/interestRatingBar"
+        android:numStars="1"
         android:rating="3"
-        android:stepSize="1"/>
+        android:stepSize="1"
+        android:layout_alignParentEnd="true" />
+
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New RadioButton"
+        android:id="@+id/radioButton"
+        android:layout_below="@+id/scrollView"
+        android:layout_marginTop="40dp" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ratingBar">
+        android:layout_below="@id/ratingBar"
+        android:id="@+id/scrollView">
 
         <LinearLayout
             android:orientation="vertical"
