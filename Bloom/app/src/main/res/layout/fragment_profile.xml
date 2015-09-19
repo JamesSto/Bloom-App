@@ -1,15 +1,6 @@
-<<<<<<< HEAD
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="cornell.hacks.bloom.ProfileFragment"
-=======
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" tools:context="cornell.hacks.bloom.ProfileFragment"
->>>>>>> origin/master
     android:id="@+id/a"
     android:orientation="vertical">
 
@@ -72,43 +63,16 @@
             android:background="?android:attr/selectableItemBackground"/>
     </LinearLayout>
 
-<<<<<<< HEAD
-    <RatingBar
-        android:layout_width="100dp"
-        android:layout_height="500dp"
-        android:id="@+id/ratingBar"
-        android:layout_below="@id/topBar"
-        style="@style/interestRatingBar"
-        android:numStars="1"
-        android:rating="3"
-        android:stepSize="1"
-        android:layout_alignParentEnd="true" />
-
-
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New RadioButton"
-        android:id="@+id/radioButton"
-        android:layout_below="@+id/scrollView"
-        android:layout_marginTop="40dp" />
-=======
->>>>>>> origin/master
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
-        android:layout_below="@id/ratingBar"
-        android:id="@+id/scrollView">
-=======
         android:elevation="4dp"
         android:layout_marginTop="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:background="@color/white"
         >
->>>>>>> origin/master
 
         <LinearLayout
             android:padding="8dp"
