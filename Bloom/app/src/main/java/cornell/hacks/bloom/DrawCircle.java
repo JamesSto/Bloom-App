@@ -19,15 +19,21 @@ import android.view.WindowManager;
 public class DrawCircle extends View {
     private int intensity;  // = int from 0 to 100 depending on the intensity of the signal.
     private Paint paint = new Paint();
-    private int width = this.getWidth();
-    private int height = this.getHeight();
-    private int duration = 1000;
-    private int radius;
+    //private int width = this.getWidth();
+    //private int height = this.getHeight();
+    //private int duration = 1000;
+    private float radius;
     private Handler handler = new Handler();
-    private final int DELAY = 10;
+    private int delay;
     private int velocity;
-    private final int MIN_RADIUS = 50;
+    private final float MIN_RADIUS = (float)75.0;
+    private final float MAX_RADIUS = (float)500.0;
+    private final float MIN_BLUR = (float)5.0;
+    private final float MAX_BLUR = (float)90.0;
     private boolean growCircle;
+    private int alpha;
+    private final double SCALING_FACTOR = 3.5;
+    private float blur;
 
     public DrawCircle(Context context,int intensity){
         //Empty Constructor
@@ -37,6 +43,9 @@ public class DrawCircle extends View {
         this.radius = MIN_RADIUS;
         this.growCircle = true;
         this.velocity = 5;
+        this.delay = 20;
+        alpha = 255;
+        blur = (float) 0.0;
     }
 
     public void setIntensity(int intensity){
@@ -58,11 +67,25 @@ public class DrawCircle extends View {
 
 
     public void drawCircle(Canvas canvas,int intValue){
+        //Intensity can't be 0 - divide by 0 error
+        if(intValue <= 0){
+            intValue = 1;
+        }
         setIntensity(intValue);
 
+        //Delay is less when the intensity is greater
+        this.delay = (int)( (1/(double)intensity) * 2000.0);
+
+        //Full opacity when radius is max, half opacity when radius is at min.
+        alpha = (int)((127/(MAX_RADIUS - MIN_RADIUS))*radius + (255 - (MAX_RADIUS*127/(MAX_RADIUS-MIN_RADIUS))));
+
+        //Blur increases as the radius of the circle increases.
+        blur = radius*(MAX_BLUR-MIN_BLUR)/(MAX_RADIUS-MIN_RADIUS) +
+                MAX_BLUR - MAX_RADIUS*(MAX_BLUR-MIN_BLUR)/(MAX_RADIUS-MIN_RADIUS);
+
         //Set radius of the circle
-        int maxRadius = intensity * 5 + MIN_RADIUS;
-        int velocity = (int) (intensity/5.0);
+        float maxRadius = (float) (intensity * SCALING_FACTOR + MIN_RADIUS);
+        float velocity = (float) (intensity/5.0);
         if(radius <= MIN_RADIUS && growCircle == false){
             growCircle = true;
         }
@@ -81,11 +104,12 @@ public class DrawCircle extends View {
         int blueInt = this.getResources().getColor(R.color.blue_500);
         paint.setColor(blueInt);
         paint.setStyle(Paint.Style.FILL);
-        paint.setMaskFilter(new BlurMaskFilter(8, BlurMaskFilter.Blur.NORMAL));
+        paint.setMaskFilter(new BlurMaskFilter(blur, BlurMaskFilter.Blur.NORMAL));  //Blur
+        paint.setAlpha(alpha); //Transparency
         Display disp = ((WindowManager)this.getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-        canvas.drawCircle(disp.getWidth() / 2, (float) (disp.getHeight() / 1.75), (float) (this.radius), paint);
+        canvas.drawCircle(disp.getWidth() / 2, (float) (disp.getHeight() / 1.75), this.radius, paint);
 
-        handler.postDelayed(r, DELAY);
+        handler.postDelayed(r, delay);
 
         //animateCircle(canvas, intensity);
     }
