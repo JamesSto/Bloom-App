@@ -17,6 +17,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -40,6 +42,7 @@ public class ProfileFragment extends Fragment {
     public EditText interestsEdit;
     public LinearLayout interestsLayout;
     public RatingBar ratingBar;
+    public RadioGroup radioGroup;
     public static ProfileFragment newInstance() {
         ProfileFragment fragment = new ProfileFragment();
         return fragment;
@@ -58,17 +61,18 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_profile, container, false);
+        final View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
+        radioGroup = (RadioGroup) v.findViewById(R.id.fragment_profile_button_group);
         interestsLayout = (LinearLayout) v.findViewById(R.id.interestList);
-        ratingBar = (RatingBar) v.findViewById(R.id.ratingBar);
+//        ratingBar = (RatingBar) v.findViewById(R.id.ratingBar);
         final EditText interestsInput = (EditText) v.findViewById(R.id.interestsInput);
         final Button submitButton = (Button) v.findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!interestsEdit.getText().toString().trim().equals(""))
-                    addToInterests(v);
+                    addToInterests();
                 else {
                     Snackbar snackbar = Snackbar.make(v, "Must enter an interest",
                             Snackbar.LENGTH_LONG);
@@ -79,16 +83,34 @@ public class ProfileFragment extends Fragment {
 //                    textView.setTextColor(Color.YELLOW);
                     snackbar.show();
                     interestsEdit.setInputType(0);
-                    InputMethodManager imm = (InputMethodManager)
-                            ProfileFragment.this.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(interestsEdit.getWindowToken(), 0);
+//                    InputMethodManager imm = (InputMethodManager)
+//                            ProfileFragment.this.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+//                    imm.hideSoftInputFromWindow(interestsEdit.getWindowToken(), 0);
                 }
 
             }
-            public void addToInterests(View v) {
+            public void addToInterests() {
                 interests.add(interestsEdit.getText().toString());
-                interestRatings.add((int) ratingBar.getRating());
-                ratingBar.setRating(3);
+                String text = ((RadioButton) v.findViewById(radioGroup.getCheckedRadioButtonId()))
+                        .getText().toString().replace("fragment_profile_", "");
+                int textInt = 0;
+                switch(text)
+                {
+                    case "Eh":textInt = 1;
+                        break;
+                    case "Ok":textInt = 2;
+                        break;
+                    case "Fine":textInt = 3;
+                        break;
+                    case "OMG":textInt = 4;
+                        break;
+                    case "ASDF":textInt = 5;
+                        break;
+
+
+                }
+                interestRatings.add(textInt);
+//                ratingBar.setRating(3);
                 interestsEdit.setText("");
 
                 TextView t = (TextView) getLayoutInflater(null).inflate(R.layout.list_item, null);

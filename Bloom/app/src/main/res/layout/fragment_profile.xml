@@ -48,12 +48,56 @@
         android:elevation="4dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp">
-        <RatingBar
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/ratingBar"
-            android:numStars="5"
-            android:stepSize="1"/>
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:id="@+id/fragment_profile_button_group">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Eh"
+                android:id="@+id/fragment_profile_1"
+                android:buttonTint="@color/blue_500"
+                />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ok"
+                android:id="@+id/fragment_profile_2"
+                android:buttonTint="@color/blue_500"
+                />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fine"
+                android:checked="true"
+                android:buttonTint="@color/blue_500"
+                android:id="@+id/fragment_profile_3"
+                />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_profile_4"
+                android:buttonTint="@color/blue_500"
+                android:text="OMG"
+                />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_profile_5"
+                android:buttonTint="@color/blue_500"
+                android:text="ASDF"
+
+                />
+        </RadioGroup>
+        <!--<RatingBar-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/ratingBar"-->
+            <!--android:numStars="5"-->
+            <!--android:stepSize="1"/>-->
         <Button
             android:layout_weight="1"
             android:layout_width="wrap_content"
