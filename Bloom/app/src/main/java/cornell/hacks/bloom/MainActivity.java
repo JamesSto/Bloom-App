@@ -1,5 +1,6 @@
 package cornell.hacks.bloom;
-
+//Big Red Hacks 2015
+//Authors: Jimmy Stoyell, Yuqi Zhao, Han Li, Jesse Lupica
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
