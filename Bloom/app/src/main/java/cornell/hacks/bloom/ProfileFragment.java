@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -45,13 +46,14 @@ public class ProfileFragment extends Fragment {
 
         ((MainActivity)getActivity()).interestsLayout = (LinearLayout) v.findViewById(R.id.interestList);
         final EditText interestsInput = (EditText) v.findViewById(R.id.interestsInput);
+        final Button submitButton = (Button) v.findViewById(R.id.submitButton);
         ((MainActivity)getActivity()).interestsEdit = interestsInput;
 
         interestsInput.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEND) {
-                    interestsInput.performClick();
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    submitButton.performClick();
                     return true;
                 }
                 return false;
