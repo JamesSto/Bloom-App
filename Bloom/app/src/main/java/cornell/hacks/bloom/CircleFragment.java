@@ -19,7 +19,7 @@ import android.widget.LinearLayout;
  */
 public class CircleFragment extends Fragment {
 
-
+    private int intensity = 100;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -48,7 +48,7 @@ public class CircleFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_circle, container, false);
         FrameLayout layoutContainer = (FrameLayout) v.findViewById(R.id.fragment_circle_container);
 
-        DrawCircle x = new DrawCircle(getActivity());
+        DrawCircle x = new DrawCircle(getActivity(),this.intensity);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         x.setLayoutParams(lp);
         layoutContainer.addView(x);
