@@ -33,6 +33,7 @@ public class GPSTracker extends Service implements LocationListener {
     double latitude; // Latitude
     double longitude; // Longitude
     final int EARTH_RADIUS = 6371000; //meters
+    final int MAX_CUTOFF = 300; //meters
 
     // The minimum distance to change Updates in meters
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
@@ -184,7 +185,23 @@ public class GPSTracker extends Service implements LocationListener {
      * @return intensity - value bewtween 1 and 100.
      */
     public int calcIntensity(double dist){
-        return 1;
+        double distance = dist;
+        if(distance < 1.0){
+            distance = 1.0;
+        }
+        if(distance > MAX_CUTOFF){
+            distance = MAX_CUTOFF;
+        }
+
+        double scalingfactor = 100.0/Math.log(MAX_CUTOFF);
+        double intensityDouble = 100 - scalingfactor * Math.log(distance);
+
+        if (intensityDouble < 0.0){
+            intensityDouble = 0.0;
+        }
+
+        int intensity = (int)Math.round(intensityDouble);
+        return intensity;
     }
 
     @Override
