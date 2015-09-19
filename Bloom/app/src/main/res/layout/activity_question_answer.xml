@@ -1,7 +1,8 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cornell.hacks.bloom.QuestionAnswerActivity">
+    tools:context="cornell.hacks.bloom.QuestionAnswerActivity"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
@@ -11,19 +12,27 @@
         android:textSize="40sp"
         android:background="@color/white"
         android:padding="@dimen/default_padding"
-        android:elevation="4dp"
+        android:elevation="@dimen/default_elevation"
         android:layout_margin="@dimen/default_padding"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/activity_question_answer_question"
         android:id="@+id/activity_question_answer_answersbox"
         android:orientation="vertical"
-        android:background="@color/white"
         android:layout_marginLeft="@dimen/default_padding"
-        android:layout_marginRight="@dimen/default_padding"
-        android:elevation="4dp">
+        android:layout_marginRight="@dimen/default_padding">
 
     </LinearLayout>
 
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text = "Done"
+        android:id="@+id/activity_question_answer_continue"
+        android:backgroundTint="@color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
 
-</LinearLayout>
+</RelativeLayout>
