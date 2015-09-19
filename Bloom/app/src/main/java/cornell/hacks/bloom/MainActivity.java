@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     public EditText interestsEdit;
     public LinearLayout interestsLayout;
     public RatingBar ratingBar;
-    public String ident;
+    public static String ident;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 f.createNewFile();
                 FileWriter fw = new FileWriter("firstTimeMarker.txt",false);
                 BufferedWriter bw=	new BufferedWriter(fw);
-                ident = UUID.randomUUID().toString()
+                ident = UUID.randomUUID().toString();
                 bw.write(ident);
                 bw.close();
             } catch (IOException e) {
