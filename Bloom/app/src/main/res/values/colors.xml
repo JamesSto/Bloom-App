@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="blue_500">#2196F3</color>
+    <color name="light_blue">#BCE0FB</color>
+    <color name="super_light_blue">#D3EAFD</color>
+    <color name="gray_blue">#7F8C98</color>
 
 </resources>
