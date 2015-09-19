@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Button xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="40dp"
+    android:text="My Name is Han"
+    android:background="@drawable/question_answer_button_background"
+    android:textColor="@color/white"
+    android:paddingLeft="24sp"
+    android:paddingRight="24sp"
+    android:textAllCaps="false">
+
+</Button>

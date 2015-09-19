@@ -15,4 +15,5 @@
         <item>Basketball</item>
         <item>Computers</item>
     </string-array>
+    <string name="title_activity_question_answer">QuestionAnswerActivity</string>
 </resources>
