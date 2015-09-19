@@ -3,6 +3,7 @@ package cornell.hacks.bloom;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -38,14 +39,13 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class ProfileFragment extends Fragment {
-
     public ArrayList<String> interests = new ArrayList<String>();
     public ArrayList<Integer> interestRatings = new ArrayList<Integer>();
     public EditText interestsEdit;
     public LinearLayout interestsLayout;
     public RatingBar ratingBar;
     public RadioGroup radioGroup;
-    private boolean questionsDone;
+    public boolean questionsDone;
     public static ProfileFragment newInstance() {
         ProfileFragment fragment = new ProfileFragment();
         return fragment;
@@ -53,7 +53,7 @@ public class ProfileFragment extends Fragment {
 
     public ProfileFragment() {
         // Required empty public constructor
-        questionsDone = true;
+        questionsDone = false;
     }
 
     @Override
@@ -124,7 +124,7 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public boolean onLongClick(View v) {
                         new AlertDialog.Builder(ProfileFragment.this.getActivity())
-                                .setMessage("Delete "+ t.getText().toString()+"?")
+                                .setMessage("Delete " + t.getText().toString() + "?")
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
                                         interestsLayout.removeView(t);
@@ -164,6 +164,12 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 if (questionsDone == true) {
                     MainActivity.viewPager.setCurrentItem(1);
+                }
+                else{
+                    //Transition to new fragment
+                    //questionsDone = true;
+                    Intent intent = new Intent(ProfileFragment.this.getActivity(), QuestionAnswerActivity.class);
+                    startActivity(intent);
                 }
             }
         });
