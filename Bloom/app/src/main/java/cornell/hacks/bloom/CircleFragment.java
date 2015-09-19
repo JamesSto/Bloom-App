@@ -202,10 +202,12 @@ public class CircleFragment extends Fragment implements LocationListener,
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
+        new UpdateGPSData().execute("latitude", "logitude");
     }
 
 
-    private class UpdateGPSData extends AsyncTask<String, Void, Boolean> {
+
+    private class UpdateGPSData extends AsyncTask<String, Void, String> {
 
 
         @Override
@@ -215,7 +217,7 @@ public class CircleFragment extends Fragment implements LocationListener,
         }
 
         @Override
-        protected Boolean doInBackground(String... param) {
+        protected String doInBackground(String... param) {
             try {
 
                 HttpGet httppost = new HttpGet("10.128.9.99/locationgrabber.php?User-Agent="+MainActivity.ident+
@@ -229,24 +231,26 @@ public class CircleFragment extends Fragment implements LocationListener,
                 if (status == 200) {
                     HttpEntity entity = response.getEntity();
                     String data = EntityUtils.toString(entity);
-
-
-                    JSONObject jsono = new JSONObject(data);
-
-                    return true;
+                    return data;
                 }
 
 
             } catch (IOException e) {
                 e.printStackTrace();
-            } catch (JSONException e) {
-
-                e.printStackTrace();
             }
-            return false;
+            return null;
         }
 
-        protected void onPostExecute(Boolean result) {
+        protected void onPostExecute(String result) {
+            try {
+                JSONObject data = new JSONObject(result);
+
+                //do things with data
+            }
+            catch(JSONException e)
+            {
+                e.printStackTrace();
+            }
 
         }
     }
