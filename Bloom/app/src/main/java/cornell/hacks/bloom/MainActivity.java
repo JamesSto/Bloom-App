@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import butterknife.Bind;
@@ -27,8 +28,10 @@ public class MainActivity extends AppCompatActivity {
     ViewPager viewPager;
 
     public ArrayList<String> interests = new ArrayList<String>();
+    public ArrayList<Integer> interestRatings = new ArrayList<Integer>();
     public EditText interestsEdit;
     public LinearLayout interestsLayout;
+    public RatingBar ratingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,10 +89,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void addToInterests(View v) {
         interests.add(interestsEdit.getText().toString());
+        interestRatings.add((int)ratingBar.getRating());
+        ratingBar.setRating(3);
         interestsEdit.setText("");
 
         TextView t = new TextView(this);
-        t.setText(interests.get(interests.size() - 1));
+        t.setText(interests.get(interests.size() - 1) + ": " + interestRatings.get(interestRatings.size() - 1));
         interestsLayout.addView(t);
     }
 }

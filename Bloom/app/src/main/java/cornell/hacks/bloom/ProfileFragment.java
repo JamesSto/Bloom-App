@@ -9,9 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -45,6 +48,7 @@ public class ProfileFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
         ((MainActivity)getActivity()).interestsLayout = (LinearLayout) v.findViewById(R.id.interestList);
+        ((MainActivity)getActivity()).ratingBar = (RatingBar) v.findViewById(R.id.ratingBar);
         final EditText interestsInput = (EditText) v.findViewById(R.id.interestsInput);
         final Button submitButton = (Button) v.findViewById(R.id.submitButton);
         ((MainActivity)getActivity()).interestsEdit = interestsInput;
@@ -59,6 +63,11 @@ public class ProfileFragment extends Fragment {
                 return false;
             }
         });
+
+        AutoCompleteTextView auto = (AutoCompleteTextView) interestsInput;
+
+        auto.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.interests)));
+
 
         return v;
     }
