@@ -126,7 +126,7 @@ public class CircleFragment extends Fragment implements LocationListener,
     }
     public void displayToast(String text)
     {
-        Toast.makeText(getActivity(), text, Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
     }
 
 

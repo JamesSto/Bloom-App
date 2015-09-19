@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fragment_circle_container"
-    tools:context="cornell.hacks.bloom.CircleFragment">
+    tools:context="cornell.hacks.bloom.CircleFragment"
+    android:background="?attr/selectableItemBackgroundBorderless">
 
     <TextView android:layout_width="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -10,6 +11,7 @@
         android:textColor="@color/primary_material_dark"
         android:text="@string/app_name"
         android:fontFamily="sans-serif-light"
-        android:textSize="50sp"/>
+        android:textSize="50sp"
+        android:layout_marginTop="16dp"/>
 
 </FrameLayout>
