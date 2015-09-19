@@ -21,12 +21,17 @@ import butterknife.ButterKnife;
 import android.app.Activity;
 import android.widget.Toast;
 
+import org.json.*;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -140,7 +145,26 @@ public class MainActivity extends AppCompatActivity {
             System.out.println(e);
         }
 
-        BloomUserProfile prof = new BloomUserProfile(id, interests, interestRatings);
+        JSONObject json = new JSONObject();
+        try {
+            json.put("UUID", id);
+            json.put("interests", interests);
+            json.put("interestRatings", interestRatings);
+        }
+        catch(Exception e) {
+            System.out.println(e);
+        }
+        try {
+            String serverUrl = "http://localhost";
+            URL myURL = new URL(serverUrl);
+            URLConnection c = myURL.openConnection();
+            c.setRequestProperty("json", json.toString());
+            //TODO: Add GPS location to intial setup
+            c.connect();
+        } catch (IOException e) {
+            System.err.println(e);
+        }
+
     }
 
     public static class BloomUserProfile {
