@@ -7,3 +7,5 @@ Bloom sends the user's location to a central server, and then matches the user t
 a pulsating blue light, whose intensity and size is proportional to how close the matched person is near to them. Thus, the goal of Bloom is to gently guide the user into talking to new people at large conferences, orientations, universities, etc., in the hope of finding their matched friend. However, by providing only a distance to their match, Bloom drives the user to talk to other strangers in the hope of creating spontaneous friendships.
 
 Bloom was created at Big Red Hacks 2015 at Cornell University by a team of 4 Cornell students: Han Li, Jimmy Stoyell, Mark Zhao, and Jesse Lupica.
+
+See bloomandroid.co
