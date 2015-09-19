@@ -19,8 +19,16 @@ import butterknife.ButterKnife;
 //Big Red Hacks 2015
 //Authors: Jimmy Stoyell, Yuqi Zhao, Han Li, Jesse Lupica
 import android.app.Activity;
+import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,6 +52,26 @@ public class MainActivity extends AppCompatActivity {
         // Here you would declare which page to visit on creation
         viewPager.setAdapter(pagerAdapter);
         viewPager.setCurrentItem(1);
+
+        //This is a hackathon, isn't it?
+        //Checks to see if this is the first time the user opens the app by checking the existence
+        //of a file - if it doesn't exist, it's the first time, so create the file
+        File f = new File("firstTimeMarker.txt");
+        if(!f.exists()) {
+            viewPager.setCurrentItem(0);
+            Toast.makeText(this,
+                    "Let's set up your profile - what are some of your interests?", Toast.LENGTH_LONG).show();
+            try {
+                f.createNewFile();
+                FileWriter fw = new FileWriter("firstTimeMarker.txt",false);
+                BufferedWriter bw=	new BufferedWriter(fw);
+                bw.write(UUID.randomUUID().toString());
+                bw.close();
+            } catch (IOException e) {
+                System.out.println(e);
+            }
+
+        }
     }
 
 
@@ -96,5 +124,35 @@ public class MainActivity extends AppCompatActivity {
         TextView t = new TextView(this);
         t.setText(interests.get(interests.size() - 1) + ": " + interestRatings.get(interestRatings.size() - 1));
         interestsLayout.addView(t);
+    }
+
+    //TODO: Push profile information to the server
+    public void pushProfileToServer()
+    {
+        String id = "";
+        try {
+            FileReader fr = new FileReader(new File("firstTimeMarker.txt"));
+            BufferedReader br = new BufferedReader(fr);
+            id = br.readLine();
+            br.close();
+        }
+        catch(IOException e) {
+            System.out.println(e);
+        }
+
+        BloomUserProfile prof = new BloomUserProfile(id, interests, interestRatings);
+    }
+
+    public static class BloomUserProfile {
+
+        public String identifier;
+        public ArrayList<String> interests;
+        public ArrayList<Integer> interestRatings;
+
+        public BloomUserProfile(String identifier, ArrayList<String> interests, ArrayList<Integer> interestRatings) {
+            this.identifier = identifier;
+            this.interests = interests;
+            this.interestRatings = interestRatings;
+        }
     }
 }
