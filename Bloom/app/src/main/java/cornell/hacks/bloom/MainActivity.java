@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     public EditText interestsEdit;
     public LinearLayout interestsLayout;
     public RatingBar ratingBar;
+    public String ident;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,12 +77,25 @@ public class MainActivity extends AppCompatActivity {
                 f.createNewFile();
                 FileWriter fw = new FileWriter("firstTimeMarker.txt",false);
                 BufferedWriter bw=	new BufferedWriter(fw);
-                bw.write(UUID.randomUUID().toString());
+                ident = UUID.randomUUID().toString()
+                bw.write(ident);
                 bw.close();
             } catch (IOException e) {
                 System.out.println(e);
             }
 
+        }
+        else
+        {
+            try {
+                FileReader fr = new FileReader(new File("firstTimeMarker.txt"));
+                BufferedReader br = new BufferedReader(fr);
+                ident = br.readLine();
+                br.close();
+            }
+            catch(IOException e) {
+                System.out.println(e);
+            }
         }
     }
 
@@ -140,20 +154,10 @@ public class MainActivity extends AppCompatActivity {
     //TODO: Push profile information to the server
     public void pushProfileToServer()
     {
-        String id = "";
-        try {
-            FileReader fr = new FileReader(new File("firstTimeMarker.txt"));
-            BufferedReader br = new BufferedReader(fr);
-            id = br.readLine();
-            br.close();
-        }
-        catch(IOException e) {
-            System.out.println(e);
-        }
 
         JSONObject json = new JSONObject();
         try {
-            json.put("UUID", id);
+            json.put("UUID", ident);
             json.put("interests", interests);
             json.put("interestRatings", interestRatings);
         }
