@@ -1,10 +1,10 @@
 package cornell.hacks.bloom;
-//Big Red Hacks 2015
-//Authors: Jimmy Stoyell, Yuqi Zhao, Han Li, Jesse Lupica
-import android.app.Activity;
-import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +13,9 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+//Big Red Hacks 2015
+//Authors: Jimmy Stoyell, Yuqi Zhao, Han Li, Jesse Lupica
+import android.app.Activity;
 public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.main_activity_viewpager)
@@ -24,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         FragmentManager fm = getSupportFragmentManager();
-        Fragment_Pager pagerAdapter = new Fragment_Pager(fm);
+        ScreenSlidePagerAdapter pagerAdapter = new ScreenSlidePagerAdapter(fm);
         // Here you would declare which page to visit on creation
         viewPager.setAdapter(pagerAdapter);
         viewPager.setCurrentItem(1);
@@ -51,5 +54,23 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+        public ScreenSlidePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            if(position == 0)
+                return ProfileFragment.newInstance();
+            else
+                return CircleFragment.newInstance();
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
     }
 }
