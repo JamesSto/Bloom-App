@@ -182,6 +182,12 @@ public class CircleFragment extends Fragment implements LocationListener,
         System.out.println("Intensity: " + movingintensity);
         System.out.println("Current Lat: " + mCurrentLocation.getLatitude());
         System.out.println("Current Long: " + mCurrentLocation.getLongitude());
+        System.out.println("REF Lat: " + refLoc.getLatitude());
+        System.out.println("REF Long: " + refLoc.getLongitude());
+
+        String latString = String.valueOf(mCurrentLocation.getLatitude());
+        String longString = String.valueOf(mCurrentLocation.getLongitude());
+        new UpdateGPSData().execute(latString,longString);
 
 
     }
@@ -202,7 +208,7 @@ public class CircleFragment extends Fragment implements LocationListener,
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
-        new UpdateGPSData().execute("latitude", "logitude");
+        //new UpdateGPSData().execute("latitude", "logitude");
     }
 
 
@@ -220,8 +226,8 @@ public class CircleFragment extends Fragment implements LocationListener,
         protected String doInBackground(String... param) {
             try {
 
-                HttpGet httppost = new HttpGet("10.128.9.99/locationgrabber.php?User-Agent="+MainActivity.ident+
-                        "latitude" + param[0]+ "longitude=" + param[1]);
+                HttpGet httppost = new HttpGet("http://10.128.9.99/update_location.php?User-Agent="+MainActivity.ident+
+                        "latitude=" + param[0]+ "longitude=" + param[1]);
                 HttpClient httpclient = new DefaultHttpClient();
                 HttpResponse response = httpclient.execute(httppost);
 
@@ -242,17 +248,24 @@ public class CircleFragment extends Fragment implements LocationListener,
         }
 
         protected void onPostExecute(String result) {
-            try {
-                JSONObject data = new JSONObject(result);
-
-                //do things with data
+            System.out.println("EXECUTE");
+            String resultString = result;
+            if (resultString.equals("null")){
+                refLoc.setLongitude(0.0);
+                refLoc.setLatitude(0.0);
+                System.out.println("NULL VALUES FROM SERVER");
             }
-            catch(JSONException e)
-            {
-                e.printStackTrace();
+            else{
+                int commaIndex = resultString.indexOf(",");
+                String latString = resultString.substring(1, commaIndex);
+                String longString = resultString.substring(commaIndex + 1, resultString.length() - 1);
+                refLoc.setLatitude(Double.parseDouble(latString));
+                refLoc.setLongitude(Double.parseDouble(longString));
             }
-
         }
+
+
+
     }
 
 }
