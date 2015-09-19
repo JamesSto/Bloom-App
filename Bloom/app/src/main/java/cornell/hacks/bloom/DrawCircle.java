@@ -3,10 +3,12 @@ package cornell.hacks.bloom;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.BlurMaskFilter;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,8 +34,12 @@ public class DrawCircle extends View {
     private final float MAX_BLUR = (float)90.0;
     private boolean growCircle;
     private int alpha;
-    private final double SCALING_FACTOR = 3.75;
+    private final double SCALING_FACTOR = 3.75; //Scaling for max size
     private float blur;
+    private final double DELAY_FACTOR = 500.0;
+    private final float VELOCITY_FACTOR = (float)20.0;  //Increase for slower velocity
+    private final float DPI_FACTOR = (float)0.6;
+    private Context context;
 
     public DrawCircle(Context context,int intensity){
         //Empty Constructor
@@ -46,6 +52,7 @@ public class DrawCircle extends View {
         this.delay = 20;
         alpha = 255;
         blur = (float) 0.0;
+        this.context = context;
     }
 
     public void setIntensity(int intensity){
@@ -74,7 +81,7 @@ public class DrawCircle extends View {
         setIntensity(intValue);
 
         //Delay is less when the intensity is greater
-        this.delay = (int)( (1/(double)intensity) * 2500.0);
+        this.delay = (int)( (1/(double)intensity) * DELAY_FACTOR);
 
         //Full opacity when radius is max, half opacity when radius is at min.
         alpha = (int)((127/(MAX_RADIUS - MIN_RADIUS))*radius + (255 - (MAX_RADIUS*127/(MAX_RADIUS-MIN_RADIUS))));
@@ -85,7 +92,7 @@ public class DrawCircle extends View {
 
         //Set radius of the circle
         float maxRadius = (float) (intensity * SCALING_FACTOR + MIN_RADIUS);
-        float velocity = (float) (intensity/5.0);
+        float velocity = (intensity/VELOCITY_FACTOR);
         if(radius <= MIN_RADIUS && growCircle == false){
             growCircle = true;
         }
@@ -107,11 +114,19 @@ public class DrawCircle extends View {
         paint.setMaskFilter(new BlurMaskFilter(blur, BlurMaskFilter.Blur.NORMAL));  //Blur
         paint.setAlpha(alpha); //Transparency
         Display disp = ((WindowManager)this.getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-        canvas.drawCircle(disp.getWidth() / 2, (float) (disp.getHeight() / 1.75), this.radius, paint);
+        canvas.drawCircle((float)(disp.getWidth() / 2.0), (float) (disp.getHeight() / 1.75),
+                convertDpToPixel(this.radius*DPI_FACTOR,this.context), paint);
 
         handler.postDelayed(r, delay);
 
         //animateCircle(canvas, intensity);
+    }
+
+    public static float convertDpToPixel(float dp, Context context){
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float px = dp * (metrics.densityDpi / 160f);
+        return px;
     }
 
 /*
