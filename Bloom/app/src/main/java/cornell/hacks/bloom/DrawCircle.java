@@ -26,7 +26,7 @@ public class DrawCircle extends View {
     private Handler handler = new Handler();
     private int delay;
     private int velocity;
-    private final float MIN_RADIUS = (float)100.0;
+    private final float MIN_RADIUS = (float)75.0;
     private final float MAX_RADIUS = (float)500.0;
     private final float MIN_BLUR = (float)5.0;
     private final float MAX_BLUR = (float)90.0;
