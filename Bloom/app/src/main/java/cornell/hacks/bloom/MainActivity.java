@@ -2,16 +2,32 @@ package cornell.hacks.bloom;
 //Big Red Hacks 2015
 //Authors: Jimmy Stoyell, Yuqi Zhao, Han Li, Jesse Lupica
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
-public class MainActivity extends Activity {
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
+public class MainActivity extends AppCompatActivity {
+
+    @Bind(R.id.main_activity_viewpager)
+    ViewPager viewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment_Pager pagerAdapter = new Fragment_Pager(fm);
+        // Here you would declare which page to visit on creation
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.setCurrentItem(1);
     }
 
 
