@@ -43,8 +43,7 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Bind(R.id.main_activity_viewpager)
-    ViewPager viewPager;
+    public static ViewPager viewPager;
 
     public static String ident;
 
@@ -53,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        viewPager = (ViewPager) findViewById(R.id.main_activity_viewpager);
 
         FragmentManager fm = getSupportFragmentManager();
         ScreenSlidePagerAdapter pagerAdapter = new ScreenSlidePagerAdapter(fm);

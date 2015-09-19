@@ -105,6 +105,8 @@
             android:text="OK"
             android:id="@+id/submitButton"
             android:background="?android:attr/selectableItemBackground"/>
+
+
     </LinearLayout>
 
 
@@ -127,5 +129,14 @@
             android:id = "@+id/interestList">
         </LinearLayout>
     </ScrollView>
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="70dp"
+        android:id="@+id/doneButton"
+        android:text="Done"
+        android:layout_gravity="center_horizontal"
+        android:theme="@android:style/Theme.Holo.Light"
+       />
+
 
 </LinearLayout>

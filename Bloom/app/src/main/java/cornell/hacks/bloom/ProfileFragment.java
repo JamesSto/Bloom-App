@@ -45,6 +45,7 @@ public class ProfileFragment extends Fragment {
     public LinearLayout interestsLayout;
     public RatingBar ratingBar;
     public RadioGroup radioGroup;
+    private boolean questionsDone;
     public static ProfileFragment newInstance() {
         ProfileFragment fragment = new ProfileFragment();
         return fragment;
@@ -52,6 +53,7 @@ public class ProfileFragment extends Fragment {
 
     public ProfileFragment() {
         // Required empty public constructor
+        questionsDone = true;
     }
 
     @Override
@@ -155,6 +157,17 @@ public class ProfileFragment extends Fragment {
                 return false;
             }
         });
+
+        //Done Button
+        final Button doneButton = (Button) v.findViewById(R.id.doneButton);
+        doneButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (questionsDone == true) {
+                    MainActivity.viewPager.setCurrentItem(1);
+                }
+            }
+        });
+
 
         AutoCompleteTextView auto = (AutoCompleteTextView) interestsInput;
 
