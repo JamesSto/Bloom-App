@@ -1,6 +1,6 @@
 # Bloom-App
 
-Bloom is a social networking application aimed at forging new and instantneous friendships between strangers who share similar
+Bloom is a social networking application aimed at forging new and instantaneous friendships between strangers who share similar
 interests. Upon startup, the user is asked to input their major interests. Afterward, the user is then asked five targeted questions that is aimed at matching the user to other people who have similar responses within a given area.
 
 Bloom sends the user's location to a central server, and then matches the user to others within a given radius around them who have similar interests. After the match, Bloom then recieves the matched person's location from the server. Bloom then generates
