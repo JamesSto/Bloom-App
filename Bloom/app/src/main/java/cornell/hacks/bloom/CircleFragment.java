@@ -24,7 +24,7 @@ import android.widget.Toast;
  */
 public class CircleFragment extends Fragment {
 
-    private int intensity = 100;
+    private int intensity = 100;  //Value between 0 and 100
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
