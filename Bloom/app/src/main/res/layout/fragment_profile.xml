@@ -1,9 +1,54 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="cornell.hacks.bloom.ProfileFragment">
+    android:layout_height="match_parent" tools:context="cornell.hacks.bloom.ProfileFragment"
+    android:id="@+id/a">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="Profile Picture" />
 
-</FrameLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id = "@+id/topBar">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+
+            android:imeOptions="actionDone"
+            android:layout_margin="5dp"
+            android:inputType="text"
+            android:text="Name"
+            android:ems="10"
+            android:id="@+id/interestsInput"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="OK"
+            android:id="@+id/submitButton"
+            android:onClick="addToInterests"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topBar">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:id = "@+id/interestList">
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

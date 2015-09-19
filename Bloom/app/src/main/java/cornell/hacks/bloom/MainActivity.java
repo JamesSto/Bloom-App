@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import butterknife.Bind;
@@ -16,10 +18,18 @@ import butterknife.ButterKnife;
 //Big Red Hacks 2015
 //Authors: Jimmy Stoyell, Yuqi Zhao, Han Li, Jesse Lupica
 import android.app.Activity;
+
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.main_activity_viewpager)
     ViewPager viewPager;
+
+    public ArrayList<String> interests = new ArrayList<String>();
+    public EditText interestsEdit;
+    public LinearLayout interestsLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,5 +82,14 @@ public class MainActivity extends AppCompatActivity {
         public int getCount() {
             return 2;
         }
+    }
+
+    public void addToInterests(View v) {
+        interests.add(interestsEdit.getText().toString());
+        interestsEdit.setText("");
+
+        TextView t = new TextView(this);
+        t.setText(interests.get(interests.size() - 1));
+        interestsLayout.addView(t);
     }
 }
