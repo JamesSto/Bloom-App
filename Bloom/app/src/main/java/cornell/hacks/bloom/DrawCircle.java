@@ -1,5 +1,12 @@
 package cornell.hacks.bloom;
 
+/**
+ *
+ *@author: Mark Zhao
+ *9/19/2015
+ *Big Red Hacks
+ */
+
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.content.Context;
@@ -108,15 +115,12 @@ public class DrawCircle extends View {
         if(growCircle == true){
             //Velocity is proportional to the difference between max radius and radius
             float velocity = (intensity/VELOCITY_FACTOR) + radiusPosition * DIFFERENCE_FACTOR;
-            System.out.println(velocity);
             this.radius = this.radius + velocity;
 
         }
         else{
             float minDifference = this.radius - MIN_RADIUS;
             float velocity = (intensity/VELOCITY_FACTOR) + radiusPosition * DIFFERENCE_FACTOR;
-            System.out.println("SHRINK");
-            System.out.println(velocity);
             this.radius = this.radius - velocity;
         }
 

@@ -38,7 +38,7 @@ public class CircleFragment extends Fragment implements LocationListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener{
 
-    private int intensity = 100;
+    private int intensity = 50;
     LocationRequest mLocationRequest;
     GoogleApiClient mGoogleApiClient;
     Location mCurrentLocation;

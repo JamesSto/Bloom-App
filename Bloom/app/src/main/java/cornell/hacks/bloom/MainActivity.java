@@ -16,8 +16,6 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-//Big Red Hacks 2015
-//Authors: Jimmy Stoyell, Yuqi Zhao, Han Li, Jesse Lupica
 import android.app.Activity;
 import android.widget.Toast;
 
@@ -34,6 +32,14 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.UUID;
+
+/**
+ * Big Red Hacks 2015
+ * @author Jimmy Stoyell
+ * @author Mark Zhao
+ * @author Han Li
+ * @author Jesse Lupica
+ */
 
 public class MainActivity extends AppCompatActivity {
 

@@ -32,6 +32,7 @@ public class GPSTracker extends Service implements LocationListener {
     Location location; // Location
     double latitude; // Latitude
     double longitude; // Longitude
+    final int EARTH_RADIUS = 6371000; //meters
 
     // The minimum distance to change Updates in meters
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
@@ -119,7 +120,7 @@ public class GPSTracker extends Service implements LocationListener {
 
 
     /**
-     * Function to get latitude
+     *
      * */
     public double getLatitude(){
         if(location != null){
@@ -151,9 +152,40 @@ public class GPSTracker extends Service implements LocationListener {
         return this.canGetLocation;
     }
 
+    /**
+     * Function to get the distance in meters between two location
+     * @param loc1 -first location
+     * @param loc2 - second location
+     * @return distance in meters between two locations
+     */
+    public double getDistanceBetween(Location loc1, Location loc2){
+        double loc1Lat = loc1.getLatitude();
+        double loc1Long = loc1.getLongitude();
+        double loc2Lat = loc2.getLatitude();
+        double loc2Long = loc2.getLongitude();
 
+        double dLat = Math.toRadians(loc2Lat - loc1Lat);
+        double dLong = Math.toRadians(loc2Long - loc1Long);
+        double loc1LatRadians = Math.toRadians(loc1Lat);
+        double loc2LatRadians = Math.toRadians(loc2Lat);
 
+        double a = Math.sin(dLat/2.0) * Math.sin(dLat/2.0) +
+                Math.sin(dLong/2.0) * Math.sin(dLong/2.0) * Math.cos(loc1LatRadians) * Math.cos(loc2LatRadians);
+        double c = 2.0 * Math.atan2(Math.sqrt(a), Math.sqrt(1.0-a));
 
+        double distance = EARTH_RADIUS * c;
+
+        return Math.abs(distance);
+    }
+
+    /**
+     * Function that returns
+     * @param dist - distance between two points in meters
+     * @return intensity - value bewtween 1 and 100.
+     */
+    public int calcIntensity(double dist){
+        return 1;
+    }
 
     @Override
     public void onLocationChanged(Location location) {
