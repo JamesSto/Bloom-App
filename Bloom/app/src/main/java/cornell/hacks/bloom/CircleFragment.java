@@ -49,7 +49,11 @@ public class CircleFragment extends Fragment implements LocationListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener{
 
-    private int intensity = 20;
+    public static int movingintensity = 20;
+
+    //REFERENCE LOCATION for testing
+    private Location refLoc = new Location("");
+
     LocationRequest mLocationRequest;
     GoogleApiClient mGoogleApiClient;
     Location mCurrentLocation;
@@ -57,6 +61,7 @@ public class CircleFragment extends Fragment implements LocationListener,
     String TAG = "ACTIVITY MAIN";
     private static final long INTERVAL = 1000 * 10;
     private static final long FASTEST_INTERVAL = 1000 * 5;
+    private double distanceTo;  //Distance in meters to other phone
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -71,6 +76,9 @@ public class CircleFragment extends Fragment implements LocationListener,
 
     public CircleFragment() {
         // Required empty public constructor
+        //Reference Location Setup
+        refLoc.setLatitude(42.4496769);
+        refLoc.setLongitude(-76.4822992);
     }
 
     @Override
@@ -101,7 +109,7 @@ public class CircleFragment extends Fragment implements LocationListener,
             }
         });
         
-        DrawCircle x = new DrawCircle(getActivity(),this.intensity);
+        DrawCircle x = new DrawCircle(getActivity());
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         x.setLayoutParams(lp);
         layoutContainer.addView(x);
@@ -165,6 +173,17 @@ public class CircleFragment extends Fragment implements LocationListener,
         mCurrentLocation = location;
         mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
         displayToast(location.getLatitude() +" " + location.getLongitude());
+
+        //Every Time location is changed, calculate distance between two locations and new intensity
+        //Using Reference Location
+        distanceTo = mCurrentLocation.distanceTo(refLoc);  //Change refLoc to location of second.
+        movingintensity = GPSTracker.calcIntensity(distanceTo);
+        System.out.println("DISTANCE TO: " + distanceTo);
+        System.out.println("Intensity: " + movingintensity);
+        System.out.println("Current Lat: " + mCurrentLocation.getLatitude());
+        System.out.println("Current Long: " + mCurrentLocation.getLongitude());
+
+
     }
 
     @Override

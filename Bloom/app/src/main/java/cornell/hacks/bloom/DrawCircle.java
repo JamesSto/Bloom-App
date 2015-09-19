@@ -36,7 +36,7 @@ public class DrawCircle extends View {
     private Handler handler = new Handler();
     private int delay;
     private int velocity;
-    private final float MIN_RADIUS = (float)75.0;
+    private final float MIN_RADIUS = (float)60.0;
     private final float MAX_RADIUS = (float)500.0;
     private final float MIN_BLUR = (float)5.0;
     private final float MAX_BLUR = (float)90.0;
@@ -44,15 +44,14 @@ public class DrawCircle extends View {
     private int alpha;
     private final double SCALING_FACTOR = 3.75; //Scaling for max size
     private float blur;
-    private final double DELAY_FACTOR = 500.0;
-    private final float VELOCITY_FACTOR = (float)80.0;  //Increase for slower velocity
+    private final double DELAY_FACTOR = 400.0;
+    private final float VELOCITY_FACTOR = (float)40.0;  //Increase for slower velocity
     private final float DIFFERENCE_FACTOR = (float)0.05; //
     private final float DPI_FACTOR = (float)0.6;
     private Context context;
 
-    public DrawCircle(Context context,int intensity){
+    public DrawCircle(Context context){
         super(context);
-        this.intensity = intensity;
         paint.setAntiAlias(true);
         this.radius = MIN_RADIUS;
         this.growCircle = true;
@@ -78,12 +77,13 @@ public class DrawCircle extends View {
 
     @Override
     public void onDraw(Canvas canvas){
-        drawCircle(canvas, intensity);
+        drawCircle(canvas);
     }
 
 
-    public void drawCircle(Canvas canvas,int intValue){
+    public void drawCircle(Canvas canvas){
         //Intensity can't be 0 - divide by 0 error
+        int intValue = CircleFragment.movingintensity;
         if(intValue <= 0){
             intValue = 1;
         }
