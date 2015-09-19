@@ -6,7 +6,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.widget.FrameLayout;
 
 /**
  * Use the {@link CircleFragment#newInstance} factory method to
@@ -39,8 +42,15 @@ public class CircleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View v = inflater.inflate(R.layout.fragment_circle, container, false);
+        FrameLayout layoutContainer = (FrameLayout) v.findViewById(R.id.fragment_circle_container);
+
+        DrawCircle x = new DrawCircle(getActivity());
+        layoutContainer.addView(x);
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_circle, container, false);
+        return v;
     }
 
 
