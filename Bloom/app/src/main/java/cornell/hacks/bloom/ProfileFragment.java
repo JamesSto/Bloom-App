@@ -2,10 +2,12 @@ package cornell.hacks.bloom;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,7 +84,7 @@ public class ProfileFragment extends Fragment {
 //                    TextView textView= (TextView)snackbarView.findViewById(android.support.design.R.id.snackbar_text);
 //                    textView.setTextColor(Color.YELLOW);
                     snackbar.show();
-                    interestsEdit.setInputType(0);
+//                    interestsEdit.setInputType(0);
 //                    InputMethodManager imm = (InputMethodManager)
 //                            ProfileFragment.this.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 //                    imm.hideSoftInputFromWindow(interestsEdit.getWindowToken(), 0);
@@ -113,8 +115,30 @@ public class ProfileFragment extends Fragment {
 //                ratingBar.setRating(3);
                 interestsEdit.setText("");
 
-                TextView t = (TextView) getLayoutInflater(null).inflate(R.layout.list_item, null);
+                final TextView t = (TextView) getLayoutInflater(null).inflate(R.layout.list_item, null);
+                final int currInt = interests.size() -1;
                 t.setText(interests.get(interests.size() - 1) + ": " + interestRatings.get(interestRatings.size() - 1));
+                t.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        new AlertDialog.Builder(ProfileFragment.this.getActivity())
+                                .setMessage("Delete "+ t.getText().toString()+"?")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        interestsLayout.removeView(t);
+                                        interests.remove(currInt);
+                                        interestRatings.remove(currInt);
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                })
+                                .show();
+                        return false;
+                    }
+                });
                 interestsLayout.addView(t);
             }
         });

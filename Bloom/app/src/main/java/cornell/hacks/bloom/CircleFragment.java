@@ -100,12 +100,12 @@ public class CircleFragment extends Fragment implements LocationListener,
         layoutContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Location here = LocationServices.FusedLocationApi.getLastLocation(
-                        mGoogleApiClient);
-                if(here!= null)
-                    displayToast(here.getLatitude() + " " + here.getLongitude());
-                else
-                    displayToast("Not connected");
+//                Location here = LocationServices.FusedLocationApi.getLastLocation(
+//                        mGoogleApiClient);
+//                if(here!= null)
+//                    displayToast(here.getLatitude() + " " + here.getLongitude());
+//                else
+//                    displayToast("Not connected");
             }
         });
         
