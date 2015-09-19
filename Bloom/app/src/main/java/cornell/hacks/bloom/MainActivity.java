@@ -46,11 +46,6 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.main_activity_viewpager)
     ViewPager viewPager;
 
-    public ArrayList<String> interests = new ArrayList<String>();
-    public ArrayList<Integer> interestRatings = new ArrayList<Integer>();
-    public EditText interestsEdit;
-    public LinearLayout interestsLayout;
-    public RatingBar ratingBar;
     public static String ident;
 
     @Override
@@ -140,42 +135,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void addToInterests(View v) {
-        interests.add(interestsEdit.getText().toString());
-        interestRatings.add((int)ratingBar.getRating());
-        ratingBar.setRating(3);
-        interestsEdit.setText("");
 
-        TextView t = new TextView(this);
-        t.setText(interests.get(interests.size() - 1) + ": " + interestRatings.get(interestRatings.size() - 1));
-        interestsLayout.addView(t);
-    }
 
-    //TODO: Push profile information to the server
-    public void pushProfileToServer()
-    {
-
-        JSONObject json = new JSONObject();
-        try {
-            json.put("UUID", ident);
-            json.put("interests", interests);
-            json.put("interestRatings", interestRatings);
-        }
-        catch(Exception e) {
-            System.out.println(e);
-        }
-        try {
-            String serverUrl = "http://localhost";
-            URL myURL = new URL(serverUrl);
-            URLConnection c = myURL.openConnection();
-            c.setRequestProperty("json", json.toString());
-            //TODO: Add GPS location to intial setup
-            c.connect();
-        } catch (IOException e) {
-            System.err.println(e);
-        }
-
-    }
 
     public static class BloomUserProfile {
 

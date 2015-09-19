@@ -1,47 +1,78 @@
+<<<<<<< HEAD
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="cornell.hacks.bloom.ProfileFragment"
+=======
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="cornell.hacks.bloom.ProfileFragment"
+>>>>>>> origin/master
     android:id="@+id/a"
-    android:screenOrientation="portrait">
+    android:orientation="vertical">
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id = "@+id/topBar">
+        android:id = "@+id/topBar"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:elevation="4dp"
+        android:background="@color/white">
 
         <AutoCompleteTextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="10"
-
+            android:layout_height="50dp"
+            android:background="@color/white"
             android:completionThreshold="2"
-
+            android:padding="8dp"
             android:imeOptions="actionDone"
-            android:layout_margin="5dp"
             android:inputType="text"
-            android:text=""
-            android:hint="Interest"
+            android:hint="Interests"
             android:ems="10"
             android:id="@+id/interestsInput"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
+            />
 
+        <!--<Button-->
+        <!--style="?android:attr/buttonStyleSmall"-->
+        <!--android:layout_weight="1"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:text="OK"-->
+        <!--android:id="@+id/submitButton"-->
+        <!--android:onClick="addToInterests"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_alignParentEnd="true" />-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:elevation="4dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp">
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ratingBar"
+            android:numStars="5"
+            android:stepSize="1"/>
         <Button
-            style="?android:attr/buttonStyleSmall"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="OK"
             android:id="@+id/submitButton"
-            android:onClick="addToInterests"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true" />
+            android:background="?android:attr/selectableItemBackground"/>
     </LinearLayout>
 
+<<<<<<< HEAD
     <RatingBar
         android:layout_width="100dp"
         android:layout_height="500dp"
@@ -61,21 +92,32 @@
         android:id="@+id/radioButton"
         android:layout_below="@+id/scrollView"
         android:layout_marginTop="40dp" />
+=======
+>>>>>>> origin/master
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:layout_below="@id/ratingBar"
         android:id="@+id/scrollView">
+=======
+        android:elevation="4dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@color/white"
+        >
+>>>>>>> origin/master
 
         <LinearLayout
+            android:padding="8dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
             android:id = "@+id/interestList">
         </LinearLayout>
     </ScrollView>
 
-</RelativeLayout>
+</LinearLayout>
