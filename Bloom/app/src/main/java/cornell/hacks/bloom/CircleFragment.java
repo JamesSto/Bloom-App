@@ -4,10 +4,10 @@ package cornell.hacks.bloom;
 import android.app.ActionBar;
 import android.content.Context;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +18,34 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.FusedLocationProviderApi;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+
+import java.text.DateFormat;
+import java.util.Date;
+
 /**
  * Use the {@link CircleFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CircleFragment extends Fragment {
+public class CircleFragment extends Fragment implements LocationListener,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener{
 
-    private int intensity = 100;  //Value between 0 and 100
+    private int intensity = 100;
+    LocationRequest mLocationRequest;
+    GoogleApiClient mGoogleApiClient;
+    Location mCurrentLocation;
+    String mLastUpdateTime;
+    String TAG = "ACTIVITY MAIN";
+    private static final long INTERVAL = 1000 * 10;
+    private static final long FASTEST_INTERVAL = 1000 * 5;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -44,11 +65,15 @@ public class CircleFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        buildGoogleApiClient();
+        mGoogleApiClient.connect();
+        createLocationRequest();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
 
         View v = inflater.inflate(R.layout.fragment_circle, container, false);
         FrameLayout layoutContainer = (FrameLayout) v.findViewById(R.id.fragment_circle_container);
@@ -56,46 +81,15 @@ public class CircleFragment extends Fragment {
         layoutContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getLastBestLocation();
+                Location here = LocationServices.FusedLocationApi.getLastLocation(
+                        mGoogleApiClient);
+                if(here!= null)
+                    displayToast(here.getLatitude() + " " + here.getLongitude());
+                else
+                    displayToast("Not connected");
             }
         });
-        LocationManager locationManager = (LocationManager)
-                getActivity().getSystemService(Context.LOCATION_SERVICE);
-
-        LocationListener mLocationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(final Location loc) {
-//                Toast.makeText(
-//                        getBaseContext(),
-//                        "Location changed: Lat: " + loc.getLatitude() + " Lng: "
-//                                + loc.getLongitude(), Toast.LENGTH_SHORT).show();
-//                String longitude = "Longitude: " + loc.getLongitude();
-//                String latitude = "Latitude: " + loc.getLatitude();
-                getLastBestLocation();
-
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-                displayToast("GPS Enabled");
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-                displayToast("GPS Disabled");
-            }
-        };
-
-        locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER, 5000, 10, mLocationListener);
-
-
-
+        
         DrawCircle x = new DrawCircle(getActivity(),this.intensity);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         x.setLayoutParams(lp);
@@ -136,5 +130,48 @@ public class CircleFragment extends Fragment {
     }
 
 
+    @Override
+    public void onConnected(Bundle bundle) {
+        System.out.println("connected");
+        startLocationUpdates();
+        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+        displayToast(mLastLocation.getLatitude() + " " + mLastLocation.getLongitude());
+    }
+    protected void startLocationUpdates() {
+        PendingResult<Status> pendingResult = LocationServices.FusedLocationApi.requestLocationUpdates(
+                mGoogleApiClient, mLocationRequest, this);
+        Log.d(TAG, "Location update started ..............: ");
+    }
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        Log.d(TAG, "Firing onLocationChanged..............................................");
+        mCurrentLocation = location;
+        mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
+        displayToast(location.getLatitude() +" " + location.getLongitude());
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        System.out.println("connection failed");
+    }
+    protected void createLocationRequest() {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(INTERVAL);
+        mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
 
 }
