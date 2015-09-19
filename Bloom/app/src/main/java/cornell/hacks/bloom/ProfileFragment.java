@@ -67,6 +67,8 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         final View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
+        pushProfileToServer();
+
         radioGroup = (RadioGroup) v.findViewById(R.id.fragment_profile_button_group);
         interestsLayout = (LinearLayout) v.findViewById(R.id.interestList);
 //        ratingBar = (RatingBar) v.findViewById(R.id.ratingBar);
@@ -171,6 +173,7 @@ public class ProfileFragment extends Fragment {
                     Intent intent = new Intent(ProfileFragment.this.getActivity(), QuestionAnswerActivity.class);
                     startActivity(intent);
                 }
+                pushProfileToServer();
             }
         });
 
