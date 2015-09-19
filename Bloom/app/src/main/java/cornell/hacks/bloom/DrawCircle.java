@@ -32,7 +32,7 @@ public class DrawCircle extends View {
     private final float MAX_BLUR = (float)90.0;
     private boolean growCircle;
     private int alpha;
-    private final double SCALING_FACTOR = 3.5;
+    private final double SCALING_FACTOR = 3.75;
     private float blur;
 
     public DrawCircle(Context context,int intensity){
@@ -74,7 +74,7 @@ public class DrawCircle extends View {
         setIntensity(intValue);
 
         //Delay is less when the intensity is greater
-        this.delay = (int)( (1/(double)intensity) * 2000.0);
+        this.delay = (int)( (1/(double)intensity) * 2500.0);
 
         //Full opacity when radius is max, half opacity when radius is at min.
         alpha = (int)((127/(MAX_RADIUS - MIN_RADIUS))*radius + (255 - (MAX_RADIUS*127/(MAX_RADIUS-MIN_RADIUS))));
