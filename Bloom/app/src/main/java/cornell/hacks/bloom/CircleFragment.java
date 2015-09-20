@@ -145,8 +145,9 @@ public class CircleFragment extends Fragment implements LocationListener,
     }
     public void displayToast(String text)
     {
-        if(text!=null)
-        Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+        if(text!=null) {
+            Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -256,6 +257,7 @@ public class CircleFragment extends Fragment implements LocationListener,
             String resultString = result;
             if (resultString.equals("") || !resultString.startsWith("(") || !resultString.endsWith(")")){
                 //pass
+                System.out.println("INPUT INVALID FROM SERVER.");
             }
             else{
                 int commaIndex = resultString.indexOf(",");
