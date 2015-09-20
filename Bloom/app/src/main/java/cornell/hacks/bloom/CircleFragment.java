@@ -174,7 +174,6 @@ public class CircleFragment extends Fragment implements LocationListener,
         Log.d(TAG, "Firing onLocationChanged..............................................");
         mCurrentLocation = location;
         mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
-        displayToast(location.getLatitude() +" " + location.getLongitude());
 
         //Every Time location is changed, calculate distance between two locations and new intensity
         //Using Reference Location
@@ -252,7 +251,6 @@ public class CircleFragment extends Fragment implements LocationListener,
 
         protected void onPostExecute(String result) {
             System.out.println("EXECUTE");
-            Toast.makeText(getActivity(), "POST EXEUTE", Toast.LENGTH_SHORT).show();
             System.out.println(result);
             String resultString = result;
             if (resultString.equals("") || !resultString.startsWith("(") || !resultString.endsWith(")")){
