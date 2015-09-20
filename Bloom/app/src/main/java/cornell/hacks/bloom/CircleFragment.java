@@ -250,7 +250,7 @@ public class CircleFragment extends Fragment implements LocationListener,
 
         protected void onPostExecute(String result) {
             System.out.println("EXECUTE");
-            Toast.makeText(getActivity(), "POST EXEUTE", Toast.LENGTH_SHORT);
+            Toast.makeText(getActivity(), "POST EXEUTE", Toast.LENGTH_SHORT).show();
             System.out.println(result);
             String resultString = result;
             if (resultString.equals("")){
