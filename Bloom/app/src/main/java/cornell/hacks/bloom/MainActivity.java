@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static String ident;
     public static ArrayList<String> questions = new ArrayList<String>();
+    public static ArrayList<ArrayList<String>> answerStatus = new ArrayList<>();
     public static ArrayList<Boolean> answered = new ArrayList<Boolean>();
     public static ArrayList<ArrayList<String>> answers = new ArrayList<ArrayList<String>>();
 
@@ -60,7 +61,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         questions.add("What is your dream house?");
-        questions.add("What types of pets do you like?");
+        questions.add("Would you ever want to try skydiving?");
+        questions.add("How political are you?");
         answered.add(false);
         answered.add(false);
         ArrayList<String> q1Answers = new ArrayList<String>();
@@ -70,10 +72,22 @@ public class MainActivity extends AppCompatActivity {
         answers.add(q1Answers);
 
         ArrayList<String> q2Answers = new ArrayList<String>();
-        q2Answers.add("Cats");
-        q2Answers.add("Dogs");
+        q2Answers.add("Yes");
+        q2Answers.add("No");
         answers.add(q2Answers);
+        ArrayList<String> q3Answers = new ArrayList<String>();
+        q2Answers.add("1");
+        q2Answers.add("2");
+        q2Answers.add("3");
+        q2Answers.add("4");
+        q2Answers.add("5");
+        answers.add(q3Answers);
 
+
+        for(int i = 0; i< questions.size(); i++)
+        {
+            answerStatus.add(new ArrayList<String>());
+        }
         ButterKnife.bind(this);
         viewPager = (ViewPager) findViewById(R.id.main_activity_viewpager);
 

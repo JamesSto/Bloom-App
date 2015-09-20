@@ -80,7 +80,6 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         final View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        System.out.println("CREATING\n\n\n\n\n\n\n\n\n\n\n\n\n");
         pushProfileToServer();
 
         radioGroup = (RadioGroup) v.findViewById(R.id.fragment_profile_button_group);

@@ -38,7 +38,7 @@ public class QuestionAnswerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_answer);
 
-        LinearLayout answersBox = (LinearLayout) findViewById(R.id.activity_question_answer_answersbox);
+        final LinearLayout answersBox = (LinearLayout) findViewById(R.id.activity_question_answer_answersbox);
 
 
         int enlarge = 0;
@@ -82,6 +82,19 @@ public class QuestionAnswerActivity extends AppCompatActivity {
                     @Override
                     public void onClick (View v){
                         //new UpdateQuestionTask().execute();
+                        for(int i = 0; i< answersBox.getChildCount(); i++)
+                        {
+                            LinearLayout horz = (LinearLayout) answersBox.getChildAt(i);
+                            for(int j = 0; j< horz.getChildCount(); j++)
+                            {
+                                ToggleButton but = (ToggleButton) horz.getChildAt(j);
+                                if(but.isChecked())
+                                {
+                                    String ans = but.getText().toString();
+                                    MainActivity.answerStatus.get(MainActivity.currIndex).add(ans);
+                                }
+                            }
+                        }
 
                         if(MainActivity.currIndex == MainActivity.questions.size()-1)
                         {
