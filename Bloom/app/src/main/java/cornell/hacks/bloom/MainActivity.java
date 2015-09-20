@@ -28,6 +28,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -45,12 +46,34 @@ public class MainActivity extends AppCompatActivity {
 
     public static ViewPager viewPager;
 
+    public static int currIndex = 0;
+
     public static String ident;
+    public static ArrayList<String> questions = new ArrayList<String>();
+    public static ArrayList<Boolean> answered = new ArrayList<Boolean>();
+    public static ArrayList<ArrayList<String>> answers = new ArrayList<ArrayList<String>>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        questions.add("What is your dream house?");
+        questions.add("What types of pets do you like?");
+        answered.add(false);
+        answered.add(false);
+        ArrayList<String> q1Answers = new ArrayList<String>();
+        q1Answers.add("Beach House");
+        q1Answers.add("Trailer Home");
+        q1Answers.add("Park Bench");
+        answers.add(q1Answers);
+
+        ArrayList<String> q2Answers = new ArrayList<String>();
+        q2Answers.add("Cats");
+        q2Answers.add("Dogs");
+        answers.add(q2Answers);
+
         ButterKnife.bind(this);
         viewPager = (ViewPager) findViewById(R.id.main_activity_viewpager);
 

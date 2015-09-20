@@ -1,7 +1,9 @@
 package cornell.hacks.bloom;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -14,6 +16,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -21,71 +32,77 @@ import java.util.List;
 import java.util.Set;
 
 public class QuestionAnswerActivity extends AppCompatActivity {
-    HashMap<String, List<String>> qA = new HashMap<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_answer);
 
         LinearLayout answersBox = (LinearLayout) findViewById(R.id.activity_question_answer_answersbox);
-        //Test data
-        List<String> answers = new ArrayList<>();
-        answers.add("Han"); answers.add("Mark");
-        answers.add("Jessie"); answers.add("James");
-        answers.add("HI");
-        qA.put("What is your name?", answers);
 
-        Set<String> keyset = qA.keySet();
-        Iterator<String> keys = keyset.iterator();
+
         int enlarge = 0;
-        while(keys.hasNext())
-        {
-            String question = keys.next();
-            List<String> myAnswers = qA.get(question);
-            ((TextView) findViewById(R.id.activity_question_answer_question))
-                    .setText(question);
+        String question = MainActivity.questions.get(MainActivity.currIndex);
+        ArrayList<String> myAnswers = MainActivity.answers.get(MainActivity.currIndex);
+        System.out.println(myAnswers);
+                ((TextView) findViewById(R.id.activity_question_answer_question))
+                .setText(question);
 
-            int pxMargin = (int)convertDpToPixel(4, this);
-            LinearLayout horz = new LinearLayout(this);
-            for(int i = 0; i< myAnswers.size(); i++)
-            {
-                ToggleButton ans = (ToggleButton) getLayoutInflater().inflate(R.layout.answer_button, horz, false);
-                ans.setTextOn(myAnswers.get(i));
-                ans.setTextOff(myAnswers.get(i));
-                ans.setChecked(false);
+        int pxMargin = (int) convertDpToPixel(4, this);
+        LinearLayout horz = new LinearLayout(this);
+        for (int i = 0; i < myAnswers.size(); i++) {
+            ToggleButton ans = (ToggleButton) getLayoutInflater().inflate(R.layout.answer_button, horz, false);
+            ans.setTextOn(myAnswers.get(i));
+            ans.setTextOff(myAnswers.get(i));
+            ans.setChecked(false);
+            horz.addView(ans);
+            if (horz.getChildCount() == 2) {
+                int notEnlarge = enlarge == 0 ? 1 : 0;
+                LinearLayout.LayoutParams loparams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                loparams.setMargins(pxMargin, pxMargin, pxMargin, pxMargin);
+                horz.getChildAt(notEnlarge).setLayoutParams(loparams);
+                LinearLayout.LayoutParams loparams1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                loparams1.setMargins(pxMargin, pxMargin, pxMargin, pxMargin);
+                loparams1.weight = 1;
+                horz.getChildAt(enlarge).setLayoutParams(loparams1);
+                if (enlarge == 0)
+                    enlarge = 1;
+                else
+                    enlarge = 0;
+                answersBox.addView(horz);
+                horz = new LinearLayout(this);
+            }
 
-                if(horz.getChildCount()==2)
-                {
-                    int notEnlarge = enlarge==0?1: 0;
-                    LinearLayout.LayoutParams loparams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    loparams.setMargins(pxMargin,pxMargin,pxMargin,pxMargin);
-                    horz.getChildAt(notEnlarge).setLayoutParams(loparams);
-                    LinearLayout.LayoutParams loparams1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    loparams1.setMargins(pxMargin, pxMargin, pxMargin, pxMargin);
-                    loparams1.weight = 1;
-                    horz.getChildAt(enlarge).setLayoutParams(loparams1);
-                    if(enlarge == 0)
-                        enlarge =1;
-                    else
-                        enlarge = 0;
-                    answersBox.addView(horz);
-                    horz = new LinearLayout(this);
-                }
-                horz.addView(ans);
-                if(horz.getChildCount() == 1 && i==myAnswers.size()-1)
-                {
-                    answersBox.addView(horz);
-                }
+            if (horz.getChildCount() == 1 && i == myAnswers.size() - 1) {
+                answersBox.addView(horz);
             }
         }
+        findViewById(R.id.activity_question_answer_continue).
+                setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick (View v){
+                        //new UpdateQuestionTask().execute();
 
-        findViewById(R.id.activity_question_answer_continue).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+                        if(MainActivity.currIndex == MainActivity.questions.size()-1)
+                        {
+                            finish();
+                            MainActivity.viewPager.setCurrentItem(1);
+                        }
+
+                        else
+                        {
+                            MainActivity.currIndex++;
+
+                            startActivity(new Intent(QuestionAnswerActivity.this, QuestionAnswerActivity.class));
+                            finish();
+                        }
+                    }
+                });
+
     }
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -114,4 +131,50 @@ public class QuestionAnswerActivity extends AppCompatActivity {
         float px = dp * (metrics.densityDpi / 160f);
         return px;
     }
+    /*
+    private class UpdateGPSData extends AsyncTask<String, Void, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected String doInBackground(String... param) {
+            try {
+                //JSONObject me = new JSONObject();
+                //me.put(param[0],)
+                //HttpGet httppost = new HttpGet("http://10.128.13.169/index.php?User-Agent="+MainActivity.ident+
+                //        "&profile"+);
+                HttpClient httpclient = new DefaultHttpClient();
+                HttpResponse response = httpclient.execute(httppost);
+
+                // StatusLine stat = response.getStatusLine();
+                int status = response.getStatusLine().getStatusCode();
+
+                if (status == 200) {
+                    HttpEntity entity = response.getEntity();
+                    String data = EntityUtils.toString(entity);
+                    return data;
+                }
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(String result) {
+
+        }
+
+
+
+
+    }*/
 }
+
+
