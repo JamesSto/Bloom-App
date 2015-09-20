@@ -81,14 +81,14 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/fragment_profile_4"
                 android:buttonTint="@color/blue_500"
-                android:text="OMG"
+                android:text="Great!"
                 />
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/fragment_profile_5"
                 android:buttonTint="@color/blue_500"
-                android:text="ASDF"
+                android:text="OMG"
 
                 />
         </RadioGroup>

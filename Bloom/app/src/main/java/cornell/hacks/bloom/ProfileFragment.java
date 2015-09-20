@@ -121,9 +121,9 @@ public class ProfileFragment extends Fragment {
                         break;
                     case "Fine":textInt = 3;
                         break;
-                    case "OMG":textInt = 4;
+                    case "Great!":textInt = 4;
                         break;
-                    case "ASDF":textInt = 5;
+                    case "OMG":textInt = 5;
                         break;
 
 

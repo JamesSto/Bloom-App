@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         questions.add("How political are you?");
         answered.add(false);
         answered.add(false);
+        answered.add(false);
         ArrayList<String> q1Answers = new ArrayList<String>();
         q1Answers.add("Beach House");
         q1Answers.add("Trailer Home");
@@ -76,11 +77,11 @@ public class MainActivity extends AppCompatActivity {
         q2Answers.add("No");
         answers.add(q2Answers);
         ArrayList<String> q3Answers = new ArrayList<String>();
-        q2Answers.add("1");
-        q2Answers.add("2");
-        q2Answers.add("3");
-        q2Answers.add("4");
-        q2Answers.add("5");
+        q3Answers.add("1");
+        q3Answers.add("2");
+        q3Answers.add("3");
+        q3Answers.add("4");
+        q3Answers.add("5");
         answers.add(q3Answers);
 
 
