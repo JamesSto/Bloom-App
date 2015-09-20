@@ -133,8 +133,10 @@ public class MainActivity extends AppCompatActivity {
         {
             System.out.println("UUID IS NULL INSIDE PREF creating new one");
             SharedPreferences.Editor editor = getSharedPreferences("MyPreferences", MODE_PRIVATE).edit();
-            editor.putString("UUID", UUID.randomUUID().toString());
+            ident = UUID.randomUUID().toString();
+            editor.putString("UUID", ident);
             editor.commit();
+            System.out.println("UUID: " + ident);
         }
 
 
