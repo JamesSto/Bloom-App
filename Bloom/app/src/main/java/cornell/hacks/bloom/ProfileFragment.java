@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -25,12 +26,24 @@ import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
 
 
 /**
@@ -67,6 +80,7 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         final View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
+        System.out.println("CREATING\n\n\n\n\n\n\n\n\n\n\n\n\n");
         pushProfileToServer();
 
         radioGroup = (RadioGroup) v.findViewById(R.id.fragment_profile_button_group);
@@ -188,26 +202,68 @@ public class ProfileFragment extends Fragment {
     //TODO: Push profile information to the server
     public void pushProfileToServer()
     {
+        HashMap<String, Integer> interestMap = new HashMap<>();
+        int n = 0;
+        for(String i : interests)
+        {
+            interestMap.put(i, interestRatings.get(n));
+            n++;
+        }
+
+        String id = MainActivity.ident;
 
         JSONObject json = new JSONObject();
         try {
-            json.put("UUID", MainActivity.ident);
-            json.put("interests", interests);
-            json.put("interestRatings", interestRatings);
+            json.put("interests", interestMap);
+            json.put("identifier", id);
         }
         catch(Exception e) {
             System.out.println(e);
         }
-        try {
-            String serverUrl = "http://localhost";
-            URL myURL = new URL(serverUrl);
-            URLConnection c = myURL.openConnection();
-            c.setRequestProperty("json", json.toString());
-            //TODO: Add GPS location to intial setup
-            c.connect();
-        } catch (IOException e) {
-            System.err.println(e);
+
+        System.out.println("SENDING INFO TO SERVER");
+        System.out.println(json.toString());
+        (new sendQData()).execute(json.toString());
+    }
+
+    private class sendQData extends AsyncTask<String, Void, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
         }
+
+        @Override
+        protected String doInBackground(String... param) {
+            try {
+                System.out.println("URL CONNECTING GOING\n\n\n\n\n\n");
+                String serverUrl = "http://10.128.13.169/";
+                URL myURL = new URL(serverUrl);
+                URLConnection c = myURL.openConnection();
+                c.setRequestProperty("Profile", param[0]);
+                System.out.println("Connecting");
+                c.connect();
+                BufferedReader r = new BufferedReader(new InputStreamReader(c.getInputStream()));
+                String line = r.readLine();
+                while(line != null)
+                {
+                    System.out.println("LINE OF RESPONSE TEXT: " + line);
+                    line = r.readLine();
+                }
+                } catch (IOException e) {
+                    System.out.println("THERE WAS AN OBNOXIOUS ERROR");
+                    System.err.println(e);
+                }
+            return null;
+        }
+
+        protected void onPostExecute(String result) {
+
+        }
+
+
 
     }
 

@@ -226,8 +226,8 @@ public class CircleFragment extends Fragment implements LocationListener,
         protected String doInBackground(String... param) {
             try {
 
-                HttpGet httppost = new HttpGet("http://10.128.13.169/update_location.php?User-Agent="+MainActivity.ident+
-                        "&latitude=" + param[0]+ "&longitude=" + param[1]);
+                HttpGet httppost = new HttpGet("http://10.128.9.99/update_location.php?User-Agent="+MainActivity.ident+
+                        "latitude=" + param[0]+ "longitude=" + param[1]);
                 HttpClient httpclient = new DefaultHttpClient();
                 HttpResponse response = httpclient.execute(httppost);
 
@@ -249,15 +249,13 @@ public class CircleFragment extends Fragment implements LocationListener,
 
         protected void onPostExecute(String result) {
             System.out.println("EXECUTE");
-            System.out.println("FROM SERVER: " + result);
             String resultString = result;
-            if (resultString.equals("-1")){
+            if (resultString.equals("null")){
                 refLoc.setLongitude(0.0);
                 refLoc.setLatitude(0.0);
                 System.out.println("NULL VALUES FROM SERVER");
             }
             else{
-                System.out.println(resultString);
                 int commaIndex = resultString.indexOf(",");
                 String latString = resultString.substring(1, commaIndex);
                 String longString = resultString.substring(commaIndex + 1, resultString.length() - 1);

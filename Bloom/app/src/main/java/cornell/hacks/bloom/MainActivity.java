@@ -54,12 +54,6 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         viewPager = (ViewPager) findViewById(R.id.main_activity_viewpager);
 
-        FragmentManager fm = getSupportFragmentManager();
-        ScreenSlidePagerAdapter pagerAdapter = new ScreenSlidePagerAdapter(fm);
-        // Here you would declare which page to visit on creation
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.setCurrentItem(1);
-
         //This is a hackathon, isn't it?
         //Checks to see if this is the first time the user opens the app by checking the existence
         //of a file - if it doesn't exist, it's the first time, so create the file
@@ -69,10 +63,10 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this,
                     "Let's set up your profile - what are some of your interests?", Toast.LENGTH_LONG).show();
             try {
+                ident = UUID.randomUUID().toString();
                 f.createNewFile();
                 FileWriter fw = new FileWriter("firstTimeMarker.txt",false);
                 BufferedWriter bw=	new BufferedWriter(fw);
-                ident = UUID.randomUUID().toString();
                 bw.write(ident);
                 bw.close();
             } catch (IOException e) {
@@ -80,18 +74,24 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
-        else
-        {
+        else {
             try {
                 FileReader fr = new FileReader(new File("firstTimeMarker.txt"));
                 BufferedReader br = new BufferedReader(fr);
                 ident = br.readLine();
                 br.close();
-            }
-            catch(IOException e) {
+            } catch (IOException e) {
                 System.out.println(e);
             }
         }
+
+        FragmentManager fm = getSupportFragmentManager();
+        ScreenSlidePagerAdapter pagerAdapter = new ScreenSlidePagerAdapter(fm);
+        // Here you would declare which page to visit on creation
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.setCurrentItem(1);
+
+
     }
 
 
