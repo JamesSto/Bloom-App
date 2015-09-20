@@ -1,4 +1,5 @@
 package cornell.hacks.bloom;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -95,33 +96,48 @@ public class MainActivity extends AppCompatActivity {
         //This is a hackathon, isn't it?
         //Checks to see if this is the first time the user opens the app by checking the existence
         //of a file - if it doesn't exist, it's the first time, so create the file
-        File f = new File("firstTimeMarker.txt");
-        if(!f.exists()) {
-            viewPager.setCurrentItem(0);
-            Toast.makeText(this,
-                    "Let's set up your profile - what are some of your interests?", Toast.LENGTH_LONG).show();
-            try {
-                ident = UUID.randomUUID().toString();
-                f.createNewFile();
-                FileWriter fw = new FileWriter("firstTimeMarker.txt",false);
-                BufferedWriter bw=	new BufferedWriter(fw);
-                bw.write(ident);
-                bw.close();
-            } catch (IOException e) {
-                System.out.println(e);
-            }
+//        File f = new File("firstTimeMarker.txt");
+//        if(!f.exists()) {
+//            viewPager.setCurrentItem(0);
+//            Toast.makeText(this,
+//                    "Let's set up your profile - what are some of your interests?", Toast.LENGTH_LONG).show();
+//            try {
+//                ident = UUID.randomUUID().toString();
+//                f.createNewFile();
+//                FileWriter fw = new FileWriter("firstTimeMarker.txt",false);
+//                BufferedWriter bw=	new BufferedWriter(fw);
+//                bw.write(ident);
+//                bw.close();
+//            } catch (IOException e) {
+//                System.out.println(e);
+//            }
+//
+//        }
+//        else {
+//            try {
+//                FileReader fr = new FileReader(new File("firstTimeMarker.txt"));
+//                BufferedReader br = new BufferedReader(fr);
+//                ident = br.readLine();
+//                br.close();
+//            } catch (IOException e) {
+//                System.out.println(e);
+//            }
+//        }
 
+        SharedPreferences prefs = getSharedPreferences("MyPreferences", MODE_PRIVATE);
+        String uuid = prefs.getString("UUID", null);
+        if (uuid != null) {
+            ident = uuid;
         }
-        else {
-            try {
-                FileReader fr = new FileReader(new File("firstTimeMarker.txt"));
-                BufferedReader br = new BufferedReader(fr);
-                ident = br.readLine();
-                br.close();
-            } catch (IOException e) {
-                System.out.println(e);
-            }
+        else
+        {
+            System.out.println("UUID IS NULL INSIDE PREF creating new one");
+            SharedPreferences.Editor editor = getSharedPreferences("MyPreferences", MODE_PRIVATE).edit();
+            editor.putString("UUID", UUID.randomUUID().toString());
+            editor.commit();
         }
+
+
 
         FragmentManager fm = getSupportFragmentManager();
         ScreenSlidePagerAdapter pagerAdapter = new ScreenSlidePagerAdapter(fm);
