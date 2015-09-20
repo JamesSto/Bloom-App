@@ -141,12 +141,11 @@ public class CircleFragment extends Fragment implements LocationListener,
         }
         String latitude = here.getLatitude()+"";
         String longitude = here.getLongitude()+"";
-        displayToast(latitude + " " + longitude);
     }
     public void displayToast(String text)
     {
         if(text!=null) {
-            Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -157,7 +156,6 @@ public class CircleFragment extends Fragment implements LocationListener,
         startLocationUpdates();
         Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
-        displayToast(mLastLocation.getLatitude() + " " + mLastLocation.getLongitude());
     }
     protected void startLocationUpdates() {
         PendingResult<Status> pendingResult = LocationServices.FusedLocationApi.requestLocationUpdates(
