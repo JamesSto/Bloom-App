@@ -225,9 +225,10 @@ public class CircleFragment extends Fragment implements LocationListener,
         @Override
         protected String doInBackground(String... param) {
             try {
-
-                HttpGet httppost = new HttpGet("http://10.128.9.99/update_location.php?User-Agent="+MainActivity.ident+
-                        "latitude=" + param[0]+ "longitude=" + param[1]);
+                System.out.println("http://10.128.13.169//update_location.php?User-Agent="+MainActivity.ident+
+                        "&latitude=" + param[0]+ "&longitude=" + param[1]);
+                HttpGet httppost = new HttpGet("http://10.128.13.169//update_location.php?User-Agent="+MainActivity.ident+
+                        "&latitude=" + param[0]+ "&longitude=" + param[1]);
                 HttpClient httpclient = new DefaultHttpClient();
                 HttpResponse response = httpclient.execute(httppost);
 
@@ -249,11 +250,10 @@ public class CircleFragment extends Fragment implements LocationListener,
 
         protected void onPostExecute(String result) {
             System.out.println("EXECUTE");
+            Toast.makeText(getActivity(), "POST EXEUTE", Toast.LENGTH_SHORT);
+            System.out.println(result);
             String resultString = result;
-            if (resultString.equals("null")){
-                refLoc.setLongitude(0.0);
-                refLoc.setLatitude(0.0);
-                System.out.println("NULL VALUES FROM SERVER");
+            if (resultString.equals("")){
             }
             else{
                 int commaIndex = resultString.indexOf(",");
