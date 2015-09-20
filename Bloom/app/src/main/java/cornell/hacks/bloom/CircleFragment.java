@@ -258,7 +258,7 @@ public class CircleFragment extends Fragment implements LocationListener,
             else{
                 int commaIndex = resultString.indexOf(",");
                 String latString = resultString.substring(1, commaIndex);
-                String longString = resultString.substring(commaIndex + 1, resultString.length() - 1);
+                String longString = resultString.substring(commaIndex + 1, resultString.indexOf(")"));
                 refLoc.setLatitude(Double.parseDouble(latString));
                 refLoc.setLongitude(Double.parseDouble(longString));
             }
